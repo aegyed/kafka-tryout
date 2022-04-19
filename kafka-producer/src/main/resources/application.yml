@@ -1,0 +1,5 @@
+spring:
+  kafka:
+    producer:
+      client-id: ${kafka.producer.id}
+    bootstrap-servers: ${kafka.bootstrap.servers}

@@ -1,0 +1,17 @@
+---
+# Add mymachine to /etc/hosts targeting your IP!
+version: '3'
+
+# WARNING! Will kill docker if left running for longer time on Windows Docker Desktop!
+services:
+  producer-1:
+    image: kafka-producer:latest
+    environment:
+      KAFKA_PRODUCER_ID: producer-1
+      KAFKA_BOOTSTRAP_SERVERS: mymachine:29092,mymachine:39092,mymachine:49092
+
+  producer-2:
+    image: kafka-producer:latest
+    environment:
+      KAFKA_PRODUCER_ID: producer-2
+      KAFKA_BOOTSTRAP_SERVERS: mymachine:29092,mymachine:39092,mymachine:49092

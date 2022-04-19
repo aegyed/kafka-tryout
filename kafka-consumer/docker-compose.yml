@@ -1,0 +1,29 @@
+---
+# Add mymachine to /etc/hosts targeting your IP!
+version: '3'
+
+# WARNING! Will kill docker if left running for longer time on Windows Docker Desktop!
+services:
+  consumer-1:
+    image: kafka-consumer:latest
+    environment:
+      KAFKA_CONSUMER_ID: consumer-1
+      KAFKA_BOOTSTRAP_SERVERS: mymachine:29092,mymachine:39092,mymachine:49092
+      KAFKA_NUM_PARTITIONS: 15
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
+
+  consumer-2:
+    image: kafka-consumer:latest
+    environment:
+      KAFKA_CONSUMER_ID: consumer-2
+      KAFKA_BOOTSTRAP_SERVERS: mymachine:29092,mymachine:39092,mymachine:49092
+      KAFKA_NUM_PARTITIONS: 15
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
+
+  consumer-3:
+    image: kafka-consumer:latest
+    environment:
+      KAFKA_CONSUMER_ID: consumer-3
+      KAFKA_BOOTSTRAP_SERVERS: mymachine:29092,mymachine:39092,mymachine:49092
+      KAFKA_NUM_PARTITIONS: 15
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 3

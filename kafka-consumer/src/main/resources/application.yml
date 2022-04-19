@@ -1,0 +1,14 @@
+spring:
+  kafka:
+    consumer:
+      client-id: ${kafka.consumer.id:consumer}
+      group-id: kafka-tryout
+      auto-offset-reset: earliest
+      isolation-level: READ_COMMITTED
+    producer:
+      client-id: ${spring.kafka.consumer.client.id}-retry
+    bootstrap-servers: ${kafka.bootstrap.servers}
+
+kafka:
+  num-partitions: ${kafka.num.partitions}
+  default-replication-factor: ${kafka.default.replication.factor}

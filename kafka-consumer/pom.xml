@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.6.6</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>org.example</groupId>
+    <artifactId>kafka-consumer</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>kafka-consumer</name>
+    <description>Demo project for Spring Boot Kafka Consumer</description>
+    <properties>
+        <java.version>11</java.version>
+        <jib-maven-plugin.version>3.0.0</jib-maven-plugin.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-json</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                    <environmentVariables>
+                        <KAFKA_CONSUMER_ID>consumer</KAFKA_CONSUMER_ID>
+                        <!-- Add mymachine to /etc/hosts targeting your IP -->
+                        <KAFKA_BOOTSTRAP_SERVERS>mymachine:29092,mymachine:39092,mymachine:49092</KAFKA_BOOTSTRAP_SERVERS>
+                        <KAFKA_NUM_PARTITIONS>15</KAFKA_NUM_PARTITIONS>
+                        <KAFKA_DEFAULT_REPLICATION_FACTOR>3</KAFKA_DEFAULT_REPLICATION_FACTOR>
+                    </environmentVariables>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>${jib-maven-plugin.version}</version>
+                <configuration>
+                    <from>
+                        <image>eclipse-temurin:11-jre-alpine</image>
+                    </from>
+                    <to>
+                        <image>${project.name}:${project.version}</image>
+                        <tags>
+                            <tag>latest</tag>
+                        </tags>
+                    </to>
+                    <container>
+                        <environment>
+                            <!-- containers should redefine these! -->
+                            <KAFKA_CONSUMER_ID>consumer</KAFKA_CONSUMER_ID>
+                            <KAFKA_BOOTSTRAP_SERVERS>kafka:9092</KAFKA_BOOTSTRAP_SERVERS>
+                            <KAFKA_NUM_PARTITIONS>1</KAFKA_NUM_PARTITIONS>
+                            <KAFKA_DEFAULT_REPLICATION_FACTOR>1</KAFKA_DEFAULT_REPLICATION_FACTOR>
+                        </environment>
+                        <user>1000</user>
+                        <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
+                    </container>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
