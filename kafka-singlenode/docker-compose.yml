@@ -2,8 +2,11 @@
 # Add mymachine to /etc/hosts targeting your IP!
 version: '3'
 
-services:
+volumes:
+  zookeeper:
+  kafka:
 
+services:
   zookeeper:
     # See also: https://hub.docker.com/r/bitnami/zookeeper
     image: bitnami/zookeeper:latest
@@ -15,6 +18,8 @@ services:
       - "22181:2181"
     environment:
       ALLOW_ANONYMOUS_LOGIN: 'yes'
+    volumes:
+      - zookeeper:/bitnami/zookeeper
 
   kafka:
     # See also: https://hub.docker.com/r/bitnami/kafka
@@ -32,13 +37,13 @@ services:
       KAFKA_CFG_INTER_BROKER_LISTENER_NAME: INTERNAL
       KAFKA_CFG_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       ALLOW_PLAINTEXT_LISTENER: 'yes'
+    volumes:
+      - kafka:/bitnami/kafka
 
   consumer:
     image: kafka-consumer:latest
     depends_on:
       - kafka
-    environment:
-      KAFKA_NUM_PARTITIONS: 3
 
   producer:
     image: kafka-producer:latest

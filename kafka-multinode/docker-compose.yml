@@ -2,6 +2,14 @@
 # Add mymachine to /etc/hosts targeting your IP!
 version: '3'
 
+volumes:
+  zookeeper-1:
+  zookeeper-2:
+  zookeeper-3:
+  kafka-1:
+  kafka-2:
+  kafka-3:
+
 services:
   # zoonavigator is not required, but may help analyzing zookeeper
   zoonavigator:
@@ -22,6 +30,8 @@ services:
       ZOO_SERVER_ID: 1
       ZOO_SERVERS: "0.0.0.0:2888:3888,zookeeper-2:2888:3888,zookeeper-3:2888:3888"
       ALLOW_ANONYMOUS_LOGIN: 'yes'
+    volumes:
+      - zookeeper-1:/bitnami/zookeeper
 
   zookeeper-2:
     image: bitnami/zookeeper:latest
@@ -35,6 +45,8 @@ services:
       ZOO_SERVER_ID: 2
       ZOO_SERVERS: "zookeeper-1:2888:3888,0.0.0.0:2888:3888,zookeeper-3:2888:3888"
       ALLOW_ANONYMOUS_LOGIN: 'yes'
+    volumes:
+      - zookeeper-2:/bitnami/zookeeper
 
   zookeeper-3:
     image: bitnami/zookeeper:latest
@@ -48,6 +60,8 @@ services:
       ZOO_SERVER_ID: 3
       ZOO_SERVERS: "zookeeper-1:2888:3888,zookeeper-2:2888:3888,0.0.0.0:2888:3888"
       ALLOW_ANONYMOUS_LOGIN: 'yes'
+    volumes:
+      - zookeeper-3:/bitnami/zookeeper
 
   kafka-1:
     # See also: https://hub.docker.com/r/bitnami/kafka
@@ -68,6 +82,8 @@ services:
       KAFKA_CFG_NUM_PARTITIONS: 9
       KAFKA_CFG_DEFAULT_REPLICATION_FACTOR: 3
       ALLOW_PLAINTEXT_LISTENER: 'yes'
+    volumes:
+      - kafka-1:/bitnami/kafka
 
   kafka-2:
     image: bitnami/kafka:latest
@@ -87,6 +103,8 @@ services:
       KAFKA_CFG_NUM_PARTITIONS: 9
       KAFKA_CFG_DEFAULT_REPLICATION_FACTOR: 3
       ALLOW_PLAINTEXT_LISTENER: 'yes'
+    volumes:
+      - kafka-2:/bitnami/kafka
 
   kafka-3:
     image: bitnami/kafka:latest
@@ -106,6 +124,8 @@ services:
       KAFKA_CFG_NUM_PARTITIONS: 9
       KAFKA_CFG_DEFAULT_REPLICATION_FACTOR: 3
       ALLOW_PLAINTEXT_LISTENER: 'yes'
+    volumes:
+      - kafka-3:/bitnami/kafka
 
 #
 #  consumer-1:
